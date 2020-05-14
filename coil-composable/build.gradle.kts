@@ -33,7 +33,7 @@ android {
         minSdkVersion(rootProject.extra["AndroidSdk_min"] as Int)
         targetSdkVersion(rootProject.extra["AndroidSdk_target"] as Int)
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
