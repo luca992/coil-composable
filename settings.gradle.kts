@@ -36,6 +36,6 @@ bootstrapRefreshVersionsAndDependencies()
 
 
 include(":coil-composable")
-rootProject.name = "coil-composable"
+rootProject.name = "coilComposable"
 
 enableFeaturePreview("GRADLE_METADATA")
