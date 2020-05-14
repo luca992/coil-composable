@@ -4,7 +4,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("com.github.dcendents.android-maven")
 }
+
+group = "com.github.luca992"
 
 fun getProperties(path: String) : Properties {
     val properties = Properties()
@@ -27,7 +30,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(29)
         versionCode = 1
-        versionName = "0.1.2"
+        versionName = "0.1.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }

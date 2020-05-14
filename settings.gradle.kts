@@ -29,6 +29,7 @@ buildscript {
         classpath("de.fayard:dependencies:0.5.8")
         classpath ("com.android.tools.build:gradle:4.1.0-alpha09")
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
