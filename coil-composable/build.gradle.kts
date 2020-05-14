@@ -15,12 +15,6 @@ fun getProperties(path: String) : Properties {
     return properties
 }
 
-val giphyApiKey : String
-    get() {
-        val local = getProperties("local.properties")
-        return local.getProperty("giphyApiKey") ?: "Add giphyApiKey to local.properties"
-    }
-
 val versionsProperties : Properties by lazy {
     val versions = getProperties("versions.properties")
     versions
@@ -28,12 +22,12 @@ val versionsProperties : Properties by lazy {
 
 
 android {
-    compileSdkVersion(rootProject.extra["AndroidSdk_compile"] as Int)
+    compileSdkVersion(29)
     defaultConfig {
-        minSdkVersion(rootProject.extra["AndroidSdk_min"] as Int)
-        targetSdkVersion(rootProject.extra["AndroidSdk_target"] as Int)
+        minSdkVersion(21)
+        targetSdkVersion(29)
         versionCode = 1
-        versionName = "0.1.1"
+        versionName = "0.1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
