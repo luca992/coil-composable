@@ -1,6 +1,9 @@
 # How to get
 ```
 implementation 'com.github.luca992:coil-composable:{version}'
+
+*.kts:
+implementation("com.github.luca992:coil-composable:{version}")
 ```
 [![](https://jitpack.io/v/luca992/coil-composable.svg)](https://jitpack.io/#luca992/coil-composable)
 
