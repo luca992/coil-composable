@@ -67,6 +67,11 @@ android {
         composeOptions.kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
         kotlinCompilerExtensionVersion = versionsProperties["version.androidx.ui"].toString()
     }
+
+    packagingOptions {
+        //the generated .aar output won't include a META-INF folder without after com.android.tools.build:gradle > 4.1.0-alpha05. Bug?
+        excludes = emptySet<String>()
+    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -78,7 +83,7 @@ tasks.withType<KotlinCompile> {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
     implementation("androidx.core:core-ktx:_")
-    implementation("androidx.ui:ui-framework:_")
+    implementation("androidx.ui:ui-core:_")
     implementation("androidx.ui:ui-foundation:_")
     implementation("androidx.ui:ui-tooling:_")
     implementation("io.coil-kt:coil:_")
