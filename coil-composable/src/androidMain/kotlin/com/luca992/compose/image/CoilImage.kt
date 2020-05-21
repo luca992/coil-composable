@@ -26,7 +26,7 @@ fun CoilImage(
     modifier : Modifier = Modifier,
     customize: LoadRequestBuilder.() -> Unit = {}
 ) {
-    WithConstraints {
+    WithConstraints(modifier) {
         var width =
             if (constraints.maxWidth > IntPx.Zero && constraints.maxWidth < IntPx.Infinity) {
                 constraints.maxWidth.value
