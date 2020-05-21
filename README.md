@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/luca992/coil-composable.svg)](https://jitpack.io/#luca992/coil-composable)
+
 # How to get
 add jitpack repo:
 ```
@@ -17,7 +19,6 @@ implementation 'com.github.luca992:coil-composable:{version}'
 *.kts:
 implementation("com.github.luca992:coil-composable:{version}")
 ```
-[![](https://jitpack.io/v/luca992/coil-composable.svg)](https://jitpack.io/#luca992/coil-composable)
 
 # How to use
 ```
