@@ -27,23 +27,29 @@ fun CoilImage(
     customize: LoadRequestBuilder.() -> Unit = {}
 ) {
     WithConstraints {
-        val image = state<ImageAsset?> { null }
+        var width =
+            if (constraints.maxWidth > IntPx.Zero && constraints.maxWidth < IntPx.Infinity) {
+                constraints.maxWidth.value
+            } else {
+                -1
+            }
+
+        var height =
+            if (constraints.maxHeight > IntPx.Zero && constraints.maxHeight < IntPx.Infinity) {
+                constraints.maxHeight.value
+            } else {
+                -1
+            }
+
+        //if height xor width not able to be determined, make image a square of the determined dimension
+        if (width == -1) width = height
+        if (height == -1) height = width
+
+        val image = state<ImageAsset> { ImageAsset(width,height) }
         val context = ContextAmbient.current
 
         onCommit(model) {
-            val width =
-                if (constraints.maxWidth > IntPx.Zero && constraints.maxWidth < IntPx.Infinity) {
-                    constraints.maxWidth.value
-                } else {
-                    1
-                }
 
-            val height =
-                if (constraints.maxHeight > IntPx.Zero && constraints.maxHeight < IntPx.Infinity) {
-                    constraints.maxHeight.value
-                } else {
-                    1
-                }
 
             val target = object : Target {
                 override fun onStart(placeholder: Drawable?) {
@@ -64,7 +70,9 @@ fun CoilImage(
                 }
 
                 override fun onError(error: Drawable?) {
-                    image.value = error?.toBitmap()?.asImageAsset()
+                    error?.run {
+                        image.value = toBitmap().asImageAsset()
+                    }
                 }
             }
 
@@ -80,14 +88,11 @@ fun CoilImage(
             val requestDisposable = Coil.imageLoader(context).execute(request.build())
 
             onDispose {
-                image.value = null
+                image.value = ImageAsset(width,height)
                 requestDisposable.dispose()
             }
         }
-
-        image.value?.apply {
-            Image(modifier = modifier, asset = this)
-        }
+        Image(modifier = modifier, asset = image.value)
     }
 }
 
