@@ -1,4 +1,16 @@
 # How to get
+add jitpack repo:
+```
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+*.kts
+repositories {
+    maven { setUrl("https://jitpack.io") }
+}
+```
+add dependency:
 ```
 implementation 'com.github.luca992:coil-composable:{version}'
 
