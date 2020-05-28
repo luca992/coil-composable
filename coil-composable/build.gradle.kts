@@ -70,7 +70,7 @@ android {
 
     packagingOptions {
         //the generated .aar output won't include a META-INF folder without after com.android.tools.build:gradle > 4.1.0-alpha05. Bug?
-        excludes = emptySet<String>()
+        excludes = mutableSetOf<String>()
     }
 }
 
