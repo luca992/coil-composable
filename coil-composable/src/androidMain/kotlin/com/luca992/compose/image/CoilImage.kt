@@ -1,8 +1,10 @@
 package com.luca992.compose.image
 
+import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import androidx.compose.Composable
 import androidx.compose.onCommit
+import androidx.compose.remember
 import androidx.compose.state
 import androidx.core.graphics.drawable.toBitmap
 import androidx.ui.core.ContextAmbient
@@ -18,6 +20,7 @@ import coil.request.LoadRequest
 import coil.request.LoadRequestBuilder
 import coil.size.Scale
 import coil.target.Target
+import kotlinx.coroutines.*
 
 
 @Composable
@@ -47,7 +50,7 @@ fun CoilImage(
 
         val image = state<ImageAsset> { ImageAsset(width,height) }
         val context = ContextAmbient.current
-
+        var animationJob : Job? = remember { null }
         onCommit(model) {
 
 
@@ -66,7 +69,23 @@ fun CoilImage(
                 }
 
                 override fun onSuccess(result: Drawable) {
-                    image.value = result.toBitmap().asImageAsset()
+                    if (result is Animatable) {
+                        (result as Animatable).start()
+
+                        animationJob = GlobalScope.launch(Dispatchers.Default) {
+                            while (true) {
+                                val asset = result.toBitmap().asImageAsset()
+                                withContext(Dispatchers.Main) {
+                                    image.value = asset
+                                }
+                                delay(16)
+                                //1000 ms / 60 fps = 16.666 ms/fps
+                                //TODO: figure out most efficient way to dispaly a gif
+                            }
+                        }
+                    } else {
+                        image.value = result.toBitmap().asImageAsset()
+                    }
                 }
 
                 override fun onError(error: Drawable?) {
@@ -90,6 +109,7 @@ fun CoilImage(
             onDispose {
                 image.value = ImageAsset(width,height)
                 requestDisposable.dispose()
+                animationJob?.cancel()
             }
         }
         Image(modifier = modifier, asset = image.value)

@@ -1,5 +1,7 @@
 [![](https://jitpack.io/v/luca992/coil-composable.svg)](https://jitpack.io/#luca992/coil-composable)
 
+A simple library to load images and gifs into a Jetpack Compose Image composable using Coil.
+
 # How to get
 add jitpack repo:
 ```
