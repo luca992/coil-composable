@@ -25,12 +25,12 @@ val versionsProperties : Properties by lazy {
 
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
     defaultConfig {
         minSdkVersion(21)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode = 1
-        versionName = "0.2.0"
+        versionName = "0.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -66,11 +66,6 @@ android {
     composeOptions {
         composeOptions.kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
         kotlinCompilerExtensionVersion = versionsProperties["version.androidx.ui"].toString()
-    }
-
-    packagingOptions {
-        //the generated .aar output won't include a META-INF folder without after com.android.tools.build:gradle > 4.1.0-alpha05. Bug?
-        excludes = mutableSetOf<String>()
     }
 }
 
