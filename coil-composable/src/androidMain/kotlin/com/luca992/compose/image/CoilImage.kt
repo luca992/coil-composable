@@ -7,6 +7,7 @@ import androidx.compose.onCommit
 import androidx.compose.remember
 import androidx.compose.state
 import androidx.core.graphics.drawable.toBitmap
+import androidx.ui.core.Constraints.Companion.Infinity
 import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.core.WithConstraints
@@ -14,7 +15,7 @@ import androidx.ui.foundation.Image
 import androidx.ui.graphics.ImageAsset
 import androidx.ui.graphics.asImageAsset
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.IntPx
+import androidx.ui.unit.IntSize.Companion.Zero
 import coil.Coil
 import coil.request.LoadRequest
 import coil.request.LoadRequestBuilder
@@ -31,15 +32,15 @@ fun CoilImage(
 ) {
     WithConstraints(modifier) {
         var width =
-            if (constraints.maxWidth > IntPx.Zero && constraints.maxWidth < IntPx.Infinity) {
-                constraints.maxWidth.value
+            if (constraints.maxWidth > Zero.width && constraints.maxWidth < Infinity) {
+                constraints.maxWidth
             } else {
                 -1
             }
 
         var height =
-            if (constraints.maxHeight > IntPx.Zero && constraints.maxHeight < IntPx.Infinity) {
-                constraints.maxHeight.value
+            if (constraints.maxHeight > Zero.height && constraints.maxHeight < Infinity) {
+                constraints.maxHeight
             } else {
                 -1
             }
