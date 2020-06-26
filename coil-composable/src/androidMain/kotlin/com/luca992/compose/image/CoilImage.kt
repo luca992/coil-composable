@@ -2,10 +2,8 @@ package com.luca992.compose.image
 
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
-import androidx.compose.Composable
-import androidx.compose.onCommit
-import androidx.compose.remember
-import androidx.compose.state
+import androidx.annotation.Px
+import androidx.compose.*
 import androidx.core.graphics.drawable.toBitmap
 import androidx.ui.core.Constraints.Companion.Infinity
 import androidx.ui.core.ContextAmbient
@@ -58,40 +56,28 @@ fun CoilImage(
             val target = object : Target {
                 override fun onStart(placeholder: Drawable?) {
                     placeholder?.apply {
-                        if (height == 1) {
-                            val scaledHeight = intrinsicHeight* (width / intrinsicWidth )
-                            image.value = toBitmap(width, scaledHeight).asImageAsset()
-                        }
-                        if (width == 1) {
-                            val scaledWidth = intrinsicWidth * (height / intrinsicWidth )
-                            image.value = toBitmap(scaledWidth, height).asImageAsset()
+                        animationJob?.cancel()
+                        if(height != -1 && width != -1) {
+                            animationJob = image.update(this, width, height)
+                        } else if (height == -1) {
+                            val scaledHeight = intrinsicHeight * (width / intrinsicWidth )
+                            animationJob = image.update(this, width, scaledHeight)
+                        } else if (width == -1) {
+                            val scaledWidth = intrinsicWidth * (height / intrinsicHeight)
+                            animationJob = image.update(this, scaledWidth, height)
                         }
                     }
                 }
 
                 override fun onSuccess(result: Drawable) {
-                    if (result is Animatable) {
-                        (result as Animatable).start()
-
-                        animationJob = GlobalScope.launch(Dispatchers.Default) {
-                            while (true) {
-                                val asset = result.toBitmap().asImageAsset()
-                                withContext(Dispatchers.Main) {
-                                    image.value = asset
-                                }
-                                delay(16)
-                                //1000 ms / 60 fps = 16.666 ms/fps
-                                //TODO: figure out most efficient way to dispaly a gif
-                            }
-                        }
-                    } else {
-                        image.value = result.toBitmap().asImageAsset()
-                    }
+                    animationJob?.cancel()
+                    animationJob = image.update(result)
                 }
 
                 override fun onError(error: Drawable?) {
                     error?.run {
-                        image.value = toBitmap().asImageAsset()
+                        animationJob?.cancel()
+                        animationJob = image.update(error)
                     }
                 }
             }
@@ -114,6 +100,33 @@ fun CoilImage(
             }
         }
         Image(modifier = modifier, asset = image.value)
+    }
+}
+
+internal fun MutableState<ImageAsset>.update(drawable: Drawable, @Px width: Int? = null, @Px height: Int? = null) : Job? {
+    if (drawable is Animatable) {
+        (drawable as Animatable).start()
+
+        return GlobalScope.launch(Dispatchers.Default) {
+            while (true) {
+                val asset = drawable.toBitmap(
+                    width = width ?: drawable.intrinsicWidth,
+                    height =  height ?: drawable.intrinsicHeight)
+                    .asImageAsset()
+                withContext(Dispatchers.Main) {
+                    value = asset
+                }
+                delay(16)
+                //1000 ms / 60 fps = 16.666 ms/fps
+                //TODO: figure out most efficient way to dispaly a gif
+            }
+        }
+    } else {
+        value = drawable.toBitmap(
+            width = width ?: drawable.intrinsicWidth,
+            height =  height ?: drawable.intrinsicHeight)
+            .asImageAsset()
+        return null
     }
 }
 
