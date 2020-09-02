@@ -64,7 +64,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
     composeOptions {
-        composeOptions.kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+        composeOptions.kotlinCompilerVersion = "1.4.0"
         kotlinCompilerExtensionVersion = versionsProperties["version.androidx.ui"].toString()
     }
 }
@@ -72,14 +72,17 @@ android {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xjvm-default=all")
     }
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:_")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
     implementation("androidx.core:core-ktx:_")
-    implementation("androidx.ui:ui-core:_")
-    implementation("androidx.ui:ui-foundation:_")
+    implementation("androidx.compose.ui:ui:_")
+    implementation("androidx.compose.foundation:foundation:_")
     implementation("androidx.ui:ui-tooling:_")
+    implementation("androidx.ui:ui-test:_")
     implementation("io.coil-kt:coil:_")
 }

@@ -3,20 +3,19 @@ package com.luca992.compose.image
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import androidx.annotation.Px
-import androidx.compose.*
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.WithConstraints
+import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.asImageAsset
+import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.unit.Dp.Companion.Infinity
+import androidx.compose.ui.unit.IntSize.Companion.Zero
 import androidx.core.graphics.drawable.toBitmap
-import androidx.ui.core.Constraints.Companion.Infinity
-import androidx.ui.core.ContextAmbient
-import androidx.ui.core.Modifier
-import androidx.ui.core.WithConstraints
-import androidx.ui.foundation.Image
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.graphics.asImageAsset
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.IntSize.Companion.Zero
 import coil.Coil
-import coil.request.LoadRequest
-import coil.request.LoadRequestBuilder
+import coil.request.ImageRequest
 import coil.size.Scale
 import coil.target.Target
 import kotlinx.coroutines.*
@@ -26,18 +25,18 @@ import kotlinx.coroutines.*
 fun CoilImage(
     model: Any,
     modifier : Modifier = Modifier,
-    customize: LoadRequestBuilder.() -> Unit = {}
+    customize: ImageRequest.Builder.() -> Unit = {}
 ) {
     WithConstraints(modifier) {
         var width =
-            if (constraints.maxWidth > Zero.width && constraints.maxWidth < Infinity) {
+            if (constraints.maxWidth > Zero.width && constraints.maxWidth < Infinity.value.toInt()) {
                 constraints.maxWidth
             } else {
                 -1
             }
 
         var height =
-            if (constraints.maxHeight > Zero.height && constraints.maxHeight < Infinity) {
+            if (constraints.maxHeight > Zero.height && constraints.maxHeight < Infinity.value.toInt()) {
                 constraints.maxHeight
             } else {
                 -1
@@ -47,7 +46,7 @@ fun CoilImage(
         if (width == -1) width = height
         if (height == -1) height = width
 
-        val image = state<ImageAsset> { ImageAsset(width,height) }
+        val image = remember<MutableState<ImageAsset>> { mutableStateOf(ImageAsset(width,height)) }
         val context = ContextAmbient.current
         var animationJob : Job? = remember { null }
         onCommit(model) {
@@ -84,14 +83,14 @@ fun CoilImage(
 
 
 
-            val request = LoadRequest.Builder(context)
+            val request = ImageRequest.Builder(context)
                 .data(model)
                 .size(width, height)
                 .scale(Scale.FILL)
                 .apply{customize(this)}
                 .target(target)
 
-            val requestDisposable = Coil.imageLoader(context).execute(request.build())
+            val requestDisposable = Coil.imageLoader(context).enqueue(request.build())
 
             onDispose {
                 image.value = ImageAsset(width,height)
