@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("com.github.dcendents.android-maven")
 }
 
 group = "com.github.luca992"
@@ -30,7 +29,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(30)
         versionCode = 1
-        versionName = "0.3.3"
+        versionName = "0.3.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -64,7 +63,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
     composeOptions {
-        composeOptions.kotlinCompilerVersion = "1.4.0"
+        composeOptions.kotlinCompilerVersion = "1.4.10"
         kotlinCompilerExtensionVersion = versionsProperties["version.androidx.ui"].toString()
     }
 }
@@ -72,7 +71,7 @@ android {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies")
     }
 }
 

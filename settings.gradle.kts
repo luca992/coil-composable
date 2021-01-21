@@ -26,10 +26,9 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies{
-        classpath("de.fayard.refreshVersions:refreshVersions:0.9.5")
-        classpath ("com.android.tools.build:gradle:4.2.0-alpha14")
+        classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+        classpath ("com.android.tools.build:gradle:7.0.0-alpha04")
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
