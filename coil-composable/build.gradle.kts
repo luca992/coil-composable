@@ -59,6 +59,11 @@ android {
     lintOptions {
         disable("GradleDependency")
     }
+    packagingOptions {
+        // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+    }
     buildFeatures {
         compose = true
     }
