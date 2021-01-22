@@ -23,6 +23,7 @@ val versionsProperties : Properties by lazy {
 }
 
 repositories{
+    google()
     jcenter()
 }
 
