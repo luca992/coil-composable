@@ -83,6 +83,11 @@ tasks.withType<KotlinCompile> {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:_")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:_") {
+        // conflicts with mockito due to direct inclusion of byte buddy
+        // https://github.com/Kotlin/kotlinx.coroutines/issues/2023
+        exclude(group= "org.jetbrains.kotlinx", module= "kotlinx-coroutines-debug")
+    }
     implementation("androidx.core:core-ktx:_")
     implementation("androidx.compose.ui:ui:_")
     implementation("androidx.compose.foundation:foundation:_")
