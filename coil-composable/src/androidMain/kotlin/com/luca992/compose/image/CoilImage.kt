@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.Dp.Companion.Infinity
 import androidx.compose.ui.unit.IntSize.Companion.Zero
 import androidx.core.graphics.drawable.toBitmap
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import coil.Coil
 import coil.request.ImageRequest
 import coil.size.Scale

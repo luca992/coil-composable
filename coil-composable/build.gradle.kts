@@ -86,7 +86,7 @@ dependencies {
     implementation("androidx.core:core-ktx:_")
     implementation("androidx.compose.ui:ui:_")
     implementation("androidx.compose.foundation:foundation:_")
-    implementation("androidx.ui:ui-tooling:_")
-    implementation("androidx.ui:ui-test:_")
+    implementation("androidx.compose.ui:ui-tooling:_")
+    implementation("androidx.compose.ui:ui-test:_")
     implementation("io.coil-kt:coil:_")
 }
