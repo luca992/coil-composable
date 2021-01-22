@@ -4,7 +4,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         google()
-        jcenter()
     }
 }
 
@@ -26,6 +25,7 @@ buildscript {
         jcenter()
         gradlePluginPortal()
     }
+
     dependencies{
         classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
         classpath ("com.android.tools.build:gradle:7.0.0-alpha04")

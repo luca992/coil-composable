@@ -22,6 +22,10 @@ val versionsProperties : Properties by lazy {
     versions
 }
 
+repositories{
+    jcenter()
+}
+
 
 android {
     compileSdkVersion(30)
