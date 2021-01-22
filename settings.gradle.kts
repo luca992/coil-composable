@@ -30,6 +30,8 @@ buildscript {
         classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
         classpath ("com.android.tools.build:gradle:7.0.0-alpha04")
         classpath(kotlin("gradle-plugin", version = kotlinVersion))
+        // https://github.com/jitpack/jitpack.io/issues/2121
+        classpath ("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 

@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("com.github.dcendents.android-maven")
 }
 
 group = "com.github.luca992"
