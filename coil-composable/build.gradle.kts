@@ -63,8 +63,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
     composeOptions {
-        composeOptions.kotlinCompilerVersion = "1.4.10"
-        kotlinCompilerExtensionVersion = versionsProperties["version.androidx.ui"].toString()
+        kotlinCompilerVersion = "1.4.21"
+        kotlinCompilerExtensionVersion = versionsProperties["version.androidx.compose.ui"].toString()
     }
 }
 
